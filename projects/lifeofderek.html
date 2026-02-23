@@ -1,0 +1,52 @@
+<DocType HTML>
+<meta charset="UTF-8">
+<head>
+	<title>Life of Derek</title>
+	<link href="style.css" rel="stylesheet">
+	<style>
+			body {
+				background-color: black;
+				border-left: white; border-right: double white; border-bottom: double white;
+				color: white;
+				p, h1 {color: white}
+			}
+			.litmode {
+				background-image: url("papertexture.jpg");
+				border-left: black; border-right: double black; border-bottom: double black;
+				p, h1 {color: black};
+				.navbar{border: double black};
+				.navbar a{color: black};
+				figcaption{color:black}
+				color:black; <!-- This is for the caption arrow, not redundant. -->
+			}
+			.navbar{border: double white}
+			.navbar a{color: white}
+			</style>
+	<img src="LightbulbLit.png" style="float:left width="72" height="189" onclick="toggleLight()"">
+	<h1>Life of Derek</h1>
+	<div class = "navbar">
+		<a href = "../index.html">Home</a>
+		<a href = "./index.html">Projects</a>
+	</div>
+</head>
+<body>
+	<p>'Sunny Cities' one of the ambient tracks from the game:
+		<audio controls src="./sunnycities.mp3">
+			<a href="./sunnycities.mp3"> Download Soundtrack </a>
+		</audio>
+	 </p>
+	 <img src="Derek.png" style="float:left">
+ 	<img src="FlyingMob.png" style="float:right" width="349" height="221">
+	<p>The Life of Derek was, in its final form, a bizarre 2d story based side scroller built in unity (formerly godot).<br>Starting from a series of doodles in school, Derek was an exploration of the stigmas surrounding mental health, and the halo effect - and of the positives and negatives of fantasy.<br>It was also a great little world to come up with amusing ideas and appearances for characters, setpieces and bizarre scenarios, to relieve stress during my A levels.</p>
+	<p>Meet Derek, a 40 something year old with schizophrenia, living in a shack outside the city.<br>Setting out on a shopping trip into the City, he encounters a whimsical dog egging him into adventure.<br>Should he stick to his mission and pick up his prescriptions, or let a little adventure into his life?</p>
+	<p>The Life of Derek placed an emphasis on player choice, allowing or denying Derek's fantasies and touching on the consequences of each. With only a couple of instances of combat, most interactions in the game were dialogue based.<br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+</body>
+
+<script>
+	function toggleLight() {
+		var element = document.body;
+		element.classList.toggle("litmode");
+	}
+</script>

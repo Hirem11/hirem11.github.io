@@ -1,0 +1,153 @@
+<DocType HTML>
+<meta charset="UTF-8">
+<head>
+	<title>The Rat Room</title>
+	<!--Which way?-->
+  <style>
+    .navbar {
+      overflow: hidden;
+      position: fixed;
+      border: double black;
+      top: 0;
+      }
+    body {
+      background-image: url("./Assets/cheese_background.jpg");
+      border: double black;
+    }
+    <!-- Individual posts made by users -->
+    post {
+      border: double black;
+    }
+    .logout-button {
+            position: absolute;
+            top: 10px;
+            right: 150px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    #user-info {
+    	position: absolute;
+    	top: 10px;
+        right: 10px;
+    }
+  </style>
+  <h1><img src = "./Assets/rat_crawl.gif" width="60" height="43">The Rat Room</h1>
+	<div class = "navbar">
+		<a href = "/var/www/hirem11.com/index.html">Home</a>
+			<a href = "index.html">Forum</a>
+				<a href = "./projects/index.html">About</a>
+				<a href = "https://git.hirem11.com" target = "_blank" rel = "noopener noreferrer">Ratatwooey Evidence</a>
+		</div>
+</head>
+<body>
+  <h1>Hello</h1>
+  <img src="./Assets/ratman.gif" text-align:centre>
+  <div id="user-info">Not logged in</div>
+  <div id="logout-button" class="logout-button" onclick="logoutUser()">Logout</div>
+  <h1>Login</h1>
+    <form id="login-form">
+        <label for="login-username">Username:</label>
+        <input type="text" id="login-username" name="username" required>
+        <label for="login-password">Password:</label>
+        <input type="password" id="login-password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <h1>Register</h1>
+    <form id="register-form">
+        <label for="register-username">Username:</label>
+        <input type="text" id="register-username" name="username" required>
+        <label for="register-password">Password:</label>
+        <input type="password" id="register-password" name="password" required>
+	<label for="favourite-rat">Favourite Rat:</label>
+	<input type="text" id="favourite-rat" name="favourite_rat" required>
+        <button type="submit">Register</button>
+    </form>
+      <script>
+	//This is a bit quirky - just works out whether to use local or global ip address (for testing)
+	const isLocal = window.location.hostname === '192.168.1.10';
+	const url =  isLocal ? "http://192.168.1.10:8000" : "http://2.100.29.102:8000";
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch(url+"/login", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: username, password: password })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+		 // Upon authentication display username
+                displayUsername();
+		alert(data.message);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Login failed');
+            }
+        });
+
+        document.getElementById('register-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+	    const favourite_rat = document.getElementById('favourite-rat').value;
+
+            try {
+                const response = await fetch(url+"/register", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: username, password: password, favourite_rat: favourite_rat })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                alert(data.message);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Registration failed');
+            }
+        });
+
+	async function displayUsername() {
+	      const response = await fetch(url+"/currentUser", {method: 'POST', credentials: 'include',});
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('user-info').innerText = data.username;
+            } else {
+                document.getElementById('user-info').innerText = 'Not logged in';
+            }
+        }
+	
+	async function logoutUser() {
+		try {
+			const response = await fetch(url+"/logout", {method: 'POST', credentials: 'include',});
+			if (!response.ok) {
+				throw new Error('HTTP error! Status: ${response.status}');
+			}
+			document.getElementById('user-info').innerText = 'Logged Out';
+		} catch (error) {
+			console.error('Error logging out', error);
+		}
+	}
+
+
+
+    </script>
+</body>

@@ -1,0 +1,21 @@
+body {
+                        margin-left: auto; margin-right: auto; background: black; border-left: double darkorange; border-right: double darkorange; border-bottom: double darkorange;
+}
+p , h1 {
+	text-align: center; color: darkorange; font-family: 'Courier New', Courier, monospace;
+}
+a {
+	color: red;
+}
+.navbar{
+	overflow:hidden;
+	position: fixed;
+	width: 100%;
+	border: double darkorange;
+	top: 0;
+}
+.navbar a{
+	color: darkorange;
+	text-align: center;
+	padding: 14px 16px;
+}
